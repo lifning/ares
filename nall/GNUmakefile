@@ -82,6 +82,8 @@ ifeq ($(arch),)
     arch := amd64
   else ifneq ($(filter arm64-% aarch64-%,$(machine)),)
     arch := arm64
+  else ifneq ($(filter ppc% powerpc%,$(machine)),)
+	arch := ppc
   else
     $(error unknown arch, please specify manually.)
   endif

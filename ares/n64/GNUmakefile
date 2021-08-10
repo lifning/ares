@@ -37,6 +37,9 @@ $(object.path)/ares-n64-rdp.o:        $(ares.path)/n64/rdp/rdp.cpp
 ifeq ($(arch),amd64)
   flags   += -msse4.2
   options += -msse4.2
+else ifeq ($(arch),ppc)
+  flags   += -maltivec -DNO_WARN_X86_INTRINSICS
+  options += -maltivec -DNO_WARN_X86_INTRINSICS
 endif
 
 ifeq ($(vulkan),true)
@@ -70,6 +73,10 @@ ifeq ($(mame.rdp),true)
   ares.objects += mame-osd-osdcore
   ares.objects += mame-osd-osdsync
 
+  ifeq ($(arch),ppc)
+	ares.objects += mame-emu-video-rgbvmx
+  endif
+
   $(object.path)/mame-emu-emucore.o:          $(mame.path)/emu/emucore.cpp
   $(object.path)/mame-lib-util-delegate.o:    $(mame.path)/lib/util/delegate.cpp
   $(object.path)/mame-lib-util-strformat.o:   $(mame.path)/lib/util/strformat.cpp
@@ -79,6 +86,7 @@ ifeq ($(mame.rdp),true)
   $(object.path)/mame-mame-video-rdptpipe.o:  $(mame.path)/mame/video/rdptpipe.cpp
   $(object.path)/mame-osd-osdcore.o:          $(mame.path)/osd/osdcore.cpp
   $(object.path)/mame-osd-osdsync.o:          $(mame.path)/osd/osdsync.cpp
+  $(object.path)/mame-emu-video-rgbvmx.o:     $(mame.path)/emu/video/rgbvmx.cpp
 
   flags += -I$(mame.path)/devices -I$(mame.path)/emu -I$(mame.path)/lib/util -I$(mame.path)/mame -I$(mame.path)/osd
   flags += -DMAME_RDP -DLSB_FIRST -DPTR64

@@ -130,6 +130,9 @@
     } else {
       cmp32(m, imm(1), set_c);
     }
+#elif defined(ARCHITECTURE_PPC64)
+    // TODO: is this right?
+    cmp32(imm(0), m, set_c);
 #else
 #error "Unimplemented architecture"
 #endif
@@ -145,6 +148,10 @@
     if(sign < 0) {
       xor32(r, r, imm(1));
     }
+#elif defined(ARCHITECTURE_PPC64)
+    // TODO: is this right?
+    mov32(r, imm(0));
+    addc32(r, r, r);
 #else
 #error "Unimplemented architecture"
 #endif

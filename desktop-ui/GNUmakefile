@@ -20,6 +20,8 @@ endif
 ifeq ($(local),true)
   ifeq ($(arch),amd64)
     flags += -march=native
+  else ifeq ($(arch),ppc)
+    flags += -mcpu=native
   endif
 endif
 
